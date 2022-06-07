@@ -31,6 +31,11 @@ const typeDefs = gql`
     friends: [User]
   }
 
+  type Auth {
+    token: ID!
+    user: User
+  }
+
   type Query {
     me: User
     users: [User]
@@ -42,14 +47,10 @@ const typeDefs = gql`
   type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
+    addThought(thoughtText: String!): Thought
+    addReaction(thoughtId: ID!, reactionBody: String!): Thought
+    addFriend(friendId: ID!): User
   }
-
-  type Auth {
-    token: ID!
-    user: User
-  }
-
-
 `;
 
 // export the typeDefs
