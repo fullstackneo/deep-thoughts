@@ -16,7 +16,7 @@ import Home from './pages/Home';
 const httpLink = createHttpLink({
   //  The React environment runs at localhost:3000, and the server environment runs at localhost:3001
   // if we just used /graphql, as we've done previously, the requests would go to localhost:3000/graphql
-  uri: 'http://localhost:3001/graphql',
+  uri: '/graphql',
 });
 
 // After we create the link, we use the ApolloClient() constructor to instantiate the Apollo Client instance and create the connection to the API endpoint
