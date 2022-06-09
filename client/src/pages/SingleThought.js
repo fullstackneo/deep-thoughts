@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { QUERY_THOUGHT } from '../utils/queries';
+import ReactionList from './ReactionList';
 
 const SingleThought = props => {
   const { id: thoughtId } = useParams();
@@ -28,6 +29,7 @@ const SingleThought = props => {
           {/* {loading ? <div>Loading...</div> : <p>{reactions}</p>} */}
         </div>
       </div>
+      {thought.reactionCount && <ReactionList reactions={thought.reactions} />}
     </div>
   );
 };
