@@ -12,7 +12,7 @@ const Profile = props => {
 
   const user = data?.user || {};
 
-  if (!loading) {
+  if (loading) {
     return <div>Loading...</div>;
   }
 
