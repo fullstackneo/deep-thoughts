@@ -4,6 +4,7 @@ import React from 'react';
 import ThoughtList from '../components/ThoughtList';
 import { QUERY_THOUGHTS } from '../utils/queries';
 
+
 const Home = () => {
   // use useQuery hook to make query request
   // asynchronous
