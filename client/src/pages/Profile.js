@@ -6,6 +6,7 @@ import { QUERY_USER, QUERY_ME } from '../utils/queries';
 import FriendList from '../components/FriendList';
 import Auth from '../utils/auth';
 import { ADD_Friend } from '../utils/mutations';
+import ThoughtForm from '../components/ThoughtForm';
 
 const Profile = props => {
   const { username: userParam } = useParams();
@@ -20,37 +21,37 @@ const Profile = props => {
   });
 
   const [addFriend, { error }] = useMutation(ADD_Friend);
- const [beFriend, setbeFriend] = useState('false');
- const handleClick = async () => {
-   setbeFriend(!beFriend);
-   // if (!beFriend) {
-   //   try {
-   //     await addFriend({
-   //       variables: { id: user._id },
-   //     });
-   //   } catch (e) {
-   //     console.error(e);
-   //   }
-   // }
+  const [beFriend, setbeFriend] = useState('false');
+  const handleClick = async () => {
+    setbeFriend(!beFriend);
+    // if (!beFriend) {
+    //   try {
+    //     await addFriend({
+    //       variables: { id: user._id },
+    //     });
+    //   } catch (e) {
+    //     console.error(e);
+    //   }
+    // }
 
-   // if (!beFriend) {
-   //   await addFriend({
-   //     variables: { id: user._id },
-   //   });
-   // } else {
-   //   await cancelFriend({
-   //     variables: { id: user._id },
-   //   });
-   // }
+    // if (!beFriend) {
+    //   await addFriend({
+    //     variables: { id: user._id },
+    //   });
+    // } else {
+    //   await cancelFriend({
+    //     variables: { id: user._id },
+    //   });
+    // }
 
-   !beFriend
-     ? await addFriend({
-         variables: { id: user._id },
-       })
-     : await addFriend({
-         variables: { id: user._id },
-       });
- };
+    !beFriend
+      ? await addFriend({
+          variables: { id: user._id },
+        })
+      : await addFriend({
+          variables: { id: user._id },
+        });
+  };
 
   const user = data?.me || data?.user || {};
   console.log(loading);
@@ -77,7 +78,6 @@ const Profile = props => {
       </h4>
     );
   }
- 
 
   return (
     <div>
@@ -109,6 +109,7 @@ const Profile = props => {
         </div>
       </div>
       {/* )} */}
+      <div className="mb-3">{!userParam && <ThoughtForm />}</div>
     </div>
   );
 };
