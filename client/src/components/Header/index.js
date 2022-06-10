@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Auth from '../../utils/auth';
-import { QUERY_ME_BASIC, QUERY_THOUGHTS } from '../../utils/queries';
+
 
 const Header = () => {
   const logout = event => {
@@ -9,7 +9,7 @@ const Header = () => {
     Auth.logout();
   };
 
-  const loggedIn = Auth.loggedIn();
+
   
   return (
     <header className="bg-secondary mb-4 py-2 flex-row align-center">
