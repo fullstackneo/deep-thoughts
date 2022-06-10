@@ -19,6 +19,9 @@ const Profile = props => {
   });
 
   const user = data?.me || data?.user || {};
+  console.log(loading);
+
+  // 如果user最终为 { },/profile页面报错
 
   // 如果网页后面链接名字是自己，使用Navigate跳转
   // navigate to personal profile page if username is the logged-in user's
@@ -31,7 +34,7 @@ const Profile = props => {
   }
   console.log(user.friends);
 
-  if (!user?.username) {
+  if (!user.username) {
     return (
       <h4>
         You need to be logged in to see this page. Use the navigation links
@@ -46,7 +49,7 @@ const Profile = props => {
           Viewing {userParam ? `${user.username}'s` : 'your'} profile.
         </h2>
       </div>
-
+      {/* {user && ( */}
       <div className="flex-row justify-space-between mb-3">
         <div className="col-12 mb-3 col-lg-8">
           <ThoughtList
@@ -63,6 +66,7 @@ const Profile = props => {
           />
         </div>
       </div>
+      {/* )} */}
     </div>
   );
 };
