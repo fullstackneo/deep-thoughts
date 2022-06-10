@@ -1,10 +1,11 @@
-import { useQuery } from '@apollo/client';
-import React from 'react';
+import { useMutation, useQuery } from '@apollo/client';
+import React, { useState } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import ThoughtList from '../components/ThoughtList';
 import { QUERY_USER, QUERY_ME } from '../utils/queries';
 import FriendList from '../components/FriendList';
 import Auth from '../utils/auth';
+import { ADD_Friend } from '../utils/mutations';
 
 const Profile = props => {
   const { username: userParam } = useParams();
@@ -18,6 +19,39 @@ const Profile = props => {
     variables: { username: userParam },
   });
 
+  const [addFriend, { error }] = useMutation(ADD_Friend);
+ const [beFriend, setbeFriend] = useState('false');
+ const handleClick = async () => {
+   setbeFriend(!beFriend);
+   // if (!beFriend) {
+   //   try {
+   //     await addFriend({
+   //       variables: { id: user._id },
+   //     });
+   //   } catch (e) {
+   //     console.error(e);
+   //   }
+   // }
+
+   // if (!beFriend) {
+   //   await addFriend({
+   //     variables: { id: user._id },
+   //   });
+   // } else {
+   //   await cancelFriend({
+   //     variables: { id: user._id },
+   //   });
+   // }
+
+   !beFriend
+     ? await addFriend({
+         variables: { id: user._id },
+       })
+     : await addFriend({
+         variables: { id: user._id },
+       });
+ };
+
   const user = data?.me || data?.user || {};
   console.log(loading);
 
@@ -25,6 +59,7 @@ const Profile = props => {
 
   // 如果网页后面链接名字是自己，使用Navigate跳转
   // navigate to personal profile page if username is the logged-in user's
+  // loggedIn 方法既确保有token又确保token在有效期内
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
     return <Navigate to="/profile" />;
   }
@@ -42,12 +77,19 @@ const Profile = props => {
       </h4>
     );
   }
+ 
+
   return (
     <div>
       <div className="flex-row mb-3">
         <h2 className="bg-dark text-secondary p-3 display-inline-block">
           Viewing {userParam ? `${user.username}'s` : 'your'} profile.
         </h2>
+        {userParam && (
+          <button className="btn ml-auto" onClick={handleClick}>
+            {beFriend ? 'Cancel Friend' : 'Add Friend'}
+          </button>
+        )}
       </div>
       {/* {user && ( */}
       <div className="flex-row justify-space-between mb-3">
