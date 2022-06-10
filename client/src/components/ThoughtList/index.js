@@ -2,10 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const ThoughtList = ({ thoughts, title }) => {
+  // 当profile中没有loading return时候，会调用ThoughtList，但此时thoughts为undefined, 报错
+  // if (!thoughts||!thoughts.length) {
+  //   return <h3>No Thoughts Yet</h3>;
+  // }
   if (!thoughts.length) {
     return <h3>No Thoughts Yet</h3>;
   }
-
   return (
     <div>
       <h3>{title}</h3>
@@ -20,8 +23,7 @@ const ThoughtList = ({ thoughts, title }) => {
                 className="text-light"
               >
                 {thought.username}
-              </Link>
-              {' '}
+              </Link>{' '}
               thought on {thought.createdAt}
             </p>
             <div className="card-body">

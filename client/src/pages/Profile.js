@@ -1,23 +1,32 @@
 import { useQuery } from '@apollo/client';
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import ThoughtList from '../components/ThoughtList';
-import { QUERY_USER } from '../utils/queries';
+import { QUERY_USER, QUERY_ME } from '../utils/queries';
 import FriendList from '../components/FriendList';
+import Auth from '../utils/auth';
 
 const Profile = props => {
   const { username: userParam } = useParams();
-  const { loading, data } = useQuery(QUERY_USER, {
+
+  // const { loading, data } = useQuery(QUERY_USER, {
+  //   variables: { username: userParam },
+  // });
+
+  //customize profile page for logged-in user
+  const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
   });
 
-  const user = data?.user || {};
+  const user = data?.me || data?.user || {};
+
+
+
 
   if (loading) {
     return <div>Loading...</div>;
   }
   console.log(user.friends);
-  
 
   return (
     <div>
