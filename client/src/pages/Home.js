@@ -14,16 +14,18 @@ const Home = () => {
   // Once the query is complete and loading is undefined
   const { loading, data } = useQuery(QUERY_THOUGHTS);
 
+
+  // const { update, setUpdate } = useState(false);
   // use object destructuring to extract `data` from the `useQuery` Hook's response and rename it `userData` to be more descriptive
   const { data: userData } = useQuery(QUERY_ME_BASIC);
-  console.log(userData);
+  // console.log(userData);
 
   const loggedIn = Auth.loggedIn();
   // What we're saying is, if data exists, store it in the thoughts constant we just created. If data is undefined, then save an empty array to the thoughts component.
 
   // This is called optional chaining, and it's new to JavaScript—so new that only browsers seem to support it. If we tried to use it in a Node server, we'd receive a syntax error, because Node doesn't know what it is yet.
   const thoughts = data?.thoughts || [];
-  console.log(thoughts);
+  // console.log(thoughts);
 
   return (
     <main>

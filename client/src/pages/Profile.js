@@ -19,6 +19,7 @@ const Profile = props => {
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
   });
+  console.log(data);
 
   const [addFriend, { error }] = useMutation(ADD_Friend);
   const [beFriend, setbeFriend] = useState('false');
