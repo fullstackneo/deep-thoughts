@@ -15,27 +15,35 @@ const ThoughtForm = () => {
 
     update(cache, { data: { addThought } }) {
       // could potentially not exist yet, so wrap in a try/catch
+      // 如果直接访问 / profile 那么还没有QUERY_THOUGHTS 还没有缓存，会报错
+      // read what's currently in the cache
+      try {
+        const { thoughts } = cache.readQuery({ query: QUERY_THOUGHTS });
+        console.log('thoughts:', thoughts);
+
+        // prepend the newest thought to the front of the array
+        cache.writeQuery({
+          query: QUERY_THOUGHTS,
+          data: { thoughts: [addThought, ...thoughts] },
+        });
+      } catch (e) {
+        console.log('err: ', e);
+      }
 
       // Thankfully, you usually only have to manually update the cache when adding or deleting items from an array. You won't need to perform any cache updates for the next feature, the Add Reaction form.
+      // 这个无需要绑定try catch，因为home页面调用QUERY_BASIC_ME 时候，缓存了QUERY_BASIC_ME 但并没有缓存Query_ME
+      // update me array's cache
       try {
-        // update me array's cache
         const { me } = cache.readQuery({ query: QUERY_ME });
+        console.log(me);
+
         cache.writeQuery({
           query: QUERY_ME,
           data: { me: { ...me, thoughts: [...me.thoughts, addThought] } },
         });
       } catch (e) {
-        console.warn('First thought insertion by user!');
+        console.log('lai le!!!: ', e);
       }
-
-      // read what's currently in the cache
-      const { thoughts } = cache.readQuery({ query: QUERY_THOUGHTS });
-
-      // prepend the newest thought to the front of the array
-      cache.writeQuery({
-        query: QUERY_THOUGHTS,
-        data: { thoughts: [addThought, ...thoughts] },
-      });
     },
   });
 
